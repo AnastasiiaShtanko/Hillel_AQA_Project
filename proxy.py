@@ -17,7 +17,7 @@ class Writer:
 
     def write(self, row):
         with open(self.__file_path, 'a') as f:
-            f.write(row + '\n')  # Додає рядок в кінець файлу
+            f.write(row)
 
 
 class ProxyReaderWriter:
@@ -39,15 +39,13 @@ class ProxyReaderWriter:
 
     def write(self, row):
 
-        #self.read()  # Забезпечити читання даних перед записом
-
         if self.data is None or (self.last_written and row == self.last_written):
             return
 
-        self.writer.write(row)  # Використовує клас Writer для запису
+        self.writer.write(row + '\n')  # Використовує клас Writer для запису
 
         # Оновлюємо час останньої модифікації та останній записаний рядок
-        #self.last_modified = os.path.getmtime(self.file_path)
+        self.last_modified = os.path.getmtime(self.file_path)
         self.last_written = row
 
 
