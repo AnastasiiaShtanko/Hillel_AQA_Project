@@ -30,18 +30,21 @@ class ProxyReaderWriter:
         self.last_written = None  # Відстеження останнього записаного рядка
 
     def read(self):
-
         current_modified = os.path.getmtime(self.file_path)
-        if self.data is None or current_modified != self.last_modified:
+        if self.last_modified != current_modified:
+            print("Read")
             self.reader.read_file()
             self.data = self.reader.data
             self.last_modified = current_modified
+        else:
+            print("NOT Read")
 
     def write(self, row):
-
-        if self.data is None or (self.last_written and row == self.last_written):
+        if self.last_written == row:
+            print("Not write")
             return
 
+        print("write")
         self.writer.write(row + '\n')  # Використовує клас Writer для запису
 
         # Оновлюємо час останньої модифікації та останній записаний рядок
@@ -63,4 +66,3 @@ proxy_rw.read()
 proxy_rw.write('aa')  # запис в файл відбувається
 
 print(proxy_rw.data)
-
