@@ -63,3 +63,4 @@ proxy_rw.read()
 proxy_rw.write('aa')  # запис в файл відбувається
 
 print(proxy_rw.data)
+
